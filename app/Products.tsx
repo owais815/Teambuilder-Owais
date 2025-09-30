@@ -9,9 +9,10 @@ import { UC } from "./context";
 interface ProductsProps {
   products: ProductsTypes;
   gap?: string;
+  formatPrice?: (price: number) => string;
 }
 
-const Products = ({ products, gap }: ProductsProps) => {
+const Products = ({ products, gap, formatPrice }: ProductsProps) => {
   const [isLoaded, setIsloaded] = useState<boolean>(false);
   const { onAdd, cartItems } = useContext(UC);
 
@@ -68,9 +69,9 @@ const Products = ({ products, gap }: ProductsProps) => {
           <p> {products.name} </p>
           <div className=" flex gap-3">
             <span className=" text-sm text-lightGray line-through ">
-              ${products.oldPrice}
+              {formatPrice ? formatPrice(products.oldPrice) : `$${products.oldPrice}`}
             </span>
-            <b className=" text-zinc-900 "> ${products.price} </b>
+            <b className=" text-zinc-900 "> {formatPrice ? formatPrice(products.price) : `$${products.price}`} </b>
           </div>
         </nav>
 
@@ -83,7 +84,7 @@ const Products = ({ products, gap }: ProductsProps) => {
                 saveToLocalS(products);
                 setUpdate((p) => !p);
               }}
-              className={`h-6 stroke-lightGray hover:stroke-love self-start 
+              className={`h-6 stroke-lightGray hover:stroke-love self-start
           sm:hover:fill-love transition-colors cursor-pointer
           duration-1000 text-lightDim1 z-10 ${
             window.localStorage.trxfav &&
