@@ -14,6 +14,14 @@ const Show = ({ product, products }) => {
 
   const [zoom, setZoom] = useState(false);
 
+  // Here Function to format price in Japanese Yen
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('ja-JP', {
+      style: 'currency',
+      currency: 'JPY'
+    }).format(price);
+  };
+
   const imgMouseOver = (e) => {
     const img = document.getElementById("img");
     const x = e.clientX;
@@ -54,7 +62,7 @@ const Show = ({ product, products }) => {
                   key={i}
                   alt="img"
                   src={urlFor(e)}
-                  className="h-14 bg-lightDim1 mt-4 mr-4 
+                  className="h-14 bg-lightDim1 mt-4 mr-4
                   transition duration-200
                   hover:bg-primary rounded-xl w-auto"
                   onMouseOver={() => setphotoIndex(i)}
@@ -101,7 +109,7 @@ const Show = ({ product, products }) => {
               <div className=" text-secondary font-medium ">DETAILS:</div>
               <p className="w-2/3 text-lightGray"> {product.details}</p>
 
-              <div className=" my-4 text-2xl font-bold"> ${product.price} </div>
+              <div className=" my-4 text-2xl font-bold"> {formatPrice(product.price)} </div>
 
               {/* ==== QUANTITY SHOW  */}
               <div className="flex">
@@ -136,7 +144,7 @@ const Show = ({ product, products }) => {
             {/* ==== ADD AND BUY */}
             <div className=" sm:flex w-full gap-4 mt-8 px-1">
               <button
-                className=" flex justify-center items-center mb-4 
+                className=" flex justify-center items-center mb-4
                 sm:mb-0 hover:scale-105 transition
                 text-xl px-8 py-2 ring-1 ring-primary w-full sm:w-auto "
                 onClick={() => onAdd(product, qty)}
@@ -144,12 +152,12 @@ const Show = ({ product, products }) => {
                 Add to Cart
               </button>
 
-              <div
+              <button
                 className=" text-center hover:scale-105 transition shadow-md cursor-pointer
                  bg-primary text-xl px-8 py-2  text-highLight ring-1 ring-primary"
               >
                 Buy Now
-              </div>
+              </button>
             </div>
           </section>
         </div>
